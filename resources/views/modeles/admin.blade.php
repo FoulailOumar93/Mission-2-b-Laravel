@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     @stack('styles')
 </head>
-<body class="{{ session('theme') === 'dark' ? 'dark-mode' : '' }}" id="body">
+<body id="body"> <!-- ✅ Ne pas forcer dark-mode ici -->
 
     <div id="page">
 
@@ -66,13 +66,19 @@
         const body = document.getElementById('body');
         const toggleBtn = document.getElementById('toggleTheme');
 
-        // Appliquer le thème sauvegardé
+        // 🧠 Appliquer le thème sauvegardé ou celui du système si aucun
+        if (!localStorage.getItem('theme')) {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            localStorage.setItem('theme', prefersDark ? 'dark' : 'light');
+        }
+
+        // 🚀 Appliquer le thème
         if (localStorage.getItem('theme') === 'dark') {
             body.classList.add('dark-mode');
             toggleBtn.innerHTML = '☀️ Mode clair';
         }
 
-        // Écouteur de clic pour changer le thème
+        // 🎯 Changement de thème au clic
         toggleBtn.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
             const isDark = body.classList.contains('dark-mode');

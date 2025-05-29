@@ -1,359 +1,458 @@
-/* Styles des divisions principales de la page */
-
-body {
-    background-color: #77AADD;
-    background-image: url(imgs/FONDGLOBAL.jpg);
-    background-repeat: repeat-x;
-    margin: 0% 0%;
-    padding: 0.6em;
-    font-family: "Trebuchet MS", Verdana, Geneva, Arial, Helvetica, sans-serif;
-    font-size: 0.8em;
+/* 🌐 RESET GLOBAL */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", sans-serif;
+    background-color: #f5f7fa;
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 #page {
-    background-color: white;
-    width: 65%;
-    margin: auto;
-    border: 0.2em solid black;
-    padding: 0.1em;
-}
-
-#entete {
-    background-color: rgb(72, 198, 236);
-    color: #980101;
-    border: solid 0.1em #980101;
-    height: 154px;
-    padding: 0em;
-    border-collapse: separate;
-}
-
-#pied {
-    clear: both;
-    border: solid 0.2em #980101;
-    margin-left: 18%;
-    margin-top: 1em;
-    padding: 0.4em;
-    padding: 0.2em;
-    border-collapse: separate;
-}
-
-#menuGauche {
-    margin-top: 0.8em;
-    padding: 1em;
-    background-color: white;
-    color: rgb(0, 85, 227);
-    float: left;
-    width: 14%;
-}
-
-#contenu {
-    border: none;
-    padding: 1.3em;
-    background-color: white;
-    border-left: groove 0.8em #980101;
-    margin-top: 1.2em;
-    margin-left: 18%;
-    /* permet de fixer une hauteur mini sur les navigateurs modernes */
-    min-height: 27em;
-    /* pour obtenir le m�me effet sur IE, sachant que si le contenu d�passe, il
-"poussera" la hauteur en ne respectant pas la norme. On se joue de ses lacunes
-*/
-    height: 27em;
-}
-
-
-/* pour r�tablir le mauvais effet sur les nav. modernes */
-
-html>body #contenu {
-    height: auto;
-}
-
-
-/* style � appliquer � la balise ul d'identifiant menulist */
-
-ul#menuList {
-    list-style: none;
-    margin: 0px;
-    padding: 0px;
-    width: 98%;
-    font-size: 1em;
-}
-
-
-/* style � appliquer aux �l�ments de la balise ul d'identifiant menulist */
-
-ul#menuList li {
-    position: relative;
-    margin: 0px;
-    padding: 0px;
-}
-
-
-/* apparences des liens dans listes et sous-listes non num�rot�es */
-
-ul#menuList a {
-    color: rgb(0, 85, 227);
-    display: block;
-    text-decoration: none;
     width: 100%;
 }
 
-ul#menuList a:hover {
-    background: rgb(0, 85, 227);
-    color: white;
+/* 🎯 EN-TÊTE */
+#entete {
+    display: flex;
+    align-items: center;
+    background-color: #3ec2ef;
+    padding: 16px 32px;
+    gap: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-#entete #logoGSB {
-    float: left;
-    width: 238px;
-    height: 152px;
+#logoGSB {
+    width: 100px;
+    height: auto;
 }
 
 #entete h1 {
-    margin: 1em;
-    margin-left: 6em;
-    font-size: x-large;
-    text-align: center;
-}
-
-#contenu pre {
-    width: 95%;
-    overflow: scroll;
-}
-
-#contenu h2 {
-    font-size: large;
-    text-align: left;
-    margin: 0;
-    margin-bottom: 0.5em;
-}
-
-.logoValidW3c {
-    display: inline;
-}
-
-#libValidW3c {
-    display: inline;
-    vertical-align: middle;
-}
-
-
-/* Style des formulaires */
-
-.corpsForm {
-    border: solid 0.1em #000;
-    border-bottom-width: 1px;
-    margin-bottom: 0em;
-    width: 95%;
-}
-
-.piedForm {
-    border-bottom-width: 0.1em;
-    border-left-width: 0.1em;
-    border-right-width: 0.1em;
-    border-top-width: 0em;
-    border-style: solid;
-    border-color: #000;
-    text-align: right;
-    width: 95%;
-    margin-top: 0em;
-}
-
-form {
-    margin-bottom: 1em;
-}
-
-.corpsForm legend {
+    font-size: 24px;
     font-weight: bold;
-    font-size: 1.2em;
-}
-
-.corpsForm label {
-    float: left;
-    text-align: right;
-    width: 33%;
+    color: #980101;
     margin: 0;
-    padding: 0 .5em 0 0;
-    line-height: 1.8;
 }
 
-input,
-button,
-textarea,
-select {
-    font-family: "Trebuchet MS", sans-serif;
-    font-size: 1em;
+/* 🧱 STRUCTURE */
+#wrapper {
+    display: flex;
+    align-items: flex-start;
+    min-height: calc(100vh - 80px);
 }
 
-button {
-    width: 60px;
-    height: 30px;
-    text-align: center;
-    vertical-align: middle;
+#contenu {
+    flex: 1;
+    padding: 40px;
+    background-color: #f5f7fa;
+    box-sizing: border-box;
 }
 
-input:hover,
-textarea:hover,
-select:hover {
-    background-color: #FAFAE6;
+#contenu h2,
+#contenu h3 {
+    color: #2c3e50;
+    font-size: 22px;
+    margin-bottom: 20px;
+    border-left: 5px solid #007acc;
+    padding-left: 12px;
+}
+
+/* 📋 MENU */
+#menuGauche {
+    width: 240px;
+    background-color: #ffffff;
+    padding: 24px 20px;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05);
+    border-right: 2px solid #dcdcdc;
+    box-sizing: border-box;
+    min-height: 100vh;
+}
+
+#infosUtil {
+    margin-bottom: 28px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+#menuList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#menuList .smenu {
+    margin-bottom: 14px;
+}
+
+#menuList .smenu a {
+    display: block;
+    padding: 12px 16px;
+    background-color: #f4f6f8;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #004aad;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+#menuList .smenu a:hover {
+    background-color: #007acc;
+    color: white;
+    transform: translateX(5px);
+}
+
+/* 🔐 CONNEXION */
+.login-container {
+    max-width: 480px;
+    margin: 100px auto 60px auto;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.login-container h2 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 24px;
+}
+
+.login-container label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #333;
+}
+
+.password-wrapper {
+    position: relative;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding: 10px 44px 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: #fff;
+    color: #000;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.password-wrapper .eye-icon {
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    height: 20px;
+    width: 20px;
+    color: #666;
+    border: none;
+    background: none;
+    padding: 0;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container input[type="text"] {
+    width: 100%;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: #fff;
+    color: #000;
+    transition: all 0.3s ease;
+}
+
+/* BOUTONS CONNEXION */
+.login-container .btn-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.login-container button {
+    padding: 10px 22px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
     cursor: pointer;
 }
 
-
-/*  Le texte des messages d'erreur est de couleur rose sur fond ocre et de 
-taille de caract�res l�g�rement sup�rieure � la normale */
-
-.erreur {
-    background-color: rgb(237, 210, 229);
-    color: rgb(203, 28, 128);
-    font-size: 1.1em;
-    width: 95%;
+.btn-valider {
+    background-color: #27ae60;
+    color: white;
 }
 
-.centre {
+.btn-valider:hover {
+    background-color: #219150;
+}
+
+.btn-annuler {
+    background-color: #bdc3c7;
+    color: #2c3e50;
+}
+
+.btn-annuler:hover {
+    background-color: #95a5a6;
+}
+
+.forgot-link {
+    display: block;
+    margin-top: 18px;
+    font-size: 14px;
+    color: #007acc;
+    text-align: right;
+    text-decoration: none;
+}
+
+.forgot-link:hover {
+    text-decoration: underline;
+}
+
+/* ⚠️ CONFIRMATION SUPPRESSION */
+.confirm-container {
+    max-width: 600px;
+    margin: 100px auto 60px auto;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
-.info {
-    background-color: rgb(178, 207, 81);
+.confirm-container .titre {
+    font-size: 28px;
+    color: #c0392b;
+    margin-bottom: 20px;
+}
+
+.confirm-container .question {
+    font-size: 18px;
+    margin-bottom: 30px;
+    color: #2c3e50;
+}
+
+.confirm-container .btn-supprimer,
+.confirm-container .btn-annuler {
+    padding: 12px 28px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.confirm-container .btn-supprimer {
+    background-color: #e74c3c;
     color: white;
-    font-size: 1.1em;
-    width: 95%
+    margin-right: 20px;
 }
 
-.encadre {
-    border: solid 0.1em #000;
-    width: 95%;
+.confirm-container .btn-supprimer:hover {
+    background-color: #c0392b;
 }
 
-
-/* Style pour les liens de la page principale */
-
-#contenu .corpsTexte {
-    width: 80%;
-    font-size: 1.2em;
+.confirm-container .btn-annuler {
+    background-color: #666;
+    color: white;
 }
 
-
-/* Style pour les liens de la page principale */
-
-#contenu a {
-    font-size: 1.1em;
-    color: gray;
-    text-decoration: none;
+.confirm-container .btn-annuler:hover {
+    background-color: #444;
 }
 
-#contenu a:hover {
-    text-decoration: underline;
-    background-color: #D9BB7A;
-    font-size: 1em;
+/* 🌙 DARK MODE */
+.dark-mode body,
+.dark-mode #contenu,
+.dark-mode #wrapper {
+    background-color: #121212;
+    color: #e0e0e0;
 }
 
-
-/* Style pour les parties importantes de la page principale */
-
-#contenu strong {
-    font-weight: bold;
+.dark-mode #entete {
+    background-color: #1f1f1f;
 }
 
-
-/* Styles pour les tableaux de la page principale */
-
-#contenu table {
-    background-color: #FFF;
-    border: 0.1em solid #777777;
-    color: black;
-    margin-right: auto;
-    margin-left: 0.3em;
-    border-collapse: collapse;
+.dark-mode #entete h1 {
+    color: #f44336;
 }
 
-
-/* Style pour les lignes d'en-t�te des tableaux */
-
-#contenu th {
-    background-color: #77AADD;
-    height: 21px;
-    text-align: left;
-    vertical-align: top;
-    font-weight: bold;
-    border-bottom: 0.1em solid #777777;
-    font-size: 1.1em;
+.dark-mode #menuGauche {
+    background-color: #1e1e1e;
+    border-right: 2px solid #2c2c2c;
 }
 
-#contenu td {
-    border: 1px solid #777777;
+.dark-mode #infosUtil {
+    color: #f0f0f0;
 }
 
-#contenu h3 {
-    font-size: 1.2em;
+.dark-mode #menuList .smenu a {
+    background-color: #2a2a2a;
+    color: #90caf9;
 }
 
-table.listeLegere {
-    /*    width:80%;*/
-    margin-bottom: 0.5em;
+.dark-mode #menuList .smenu a:hover {
+    background-color: #1565c0;
+    color: white;
 }
 
-
-/* Tableaux quadrill�s utilis�s pour l'affichage de listes avec contenu l�ger*/
-
-table.listeLegere th,
-table.listeLegere td {
-    border: dotted rgb(178, 207, 81) 0.1em;
-    padding: 0.5em;
-    vertical-align: top;
-    text-align: left;
+.dark-mode #contenu h2,
+.dark-mode #contenu h3 {
+    color: #90caf9;
+    border-left: 5px solid #1565c0;
 }
 
-table.listeLegere caption {
-    font-size: 1.1em;
-    text-align: left;
-    margin-bottom: 0.3em;
+.dark-mode .login-container,
+.dark-mode .confirm-container {
+    background-color: #1e1e1e;
+    color: #fff;
 }
 
-table.listeLegere td {
-    vertical-align: top;
-    font-weight: normal;
+.dark-mode .login-container h2,
+.dark-mode .confirm-container .titre {
+    color: #f44336;
 }
 
-table.listeLegere th.eltForfait {
-    color: black;
+.dark-mode .login-container label {
+    color: #dddddd;
 }
 
-table.listeLegere th.date,
-table.listeLegere th.montant {
-    width: 15%;
-    color: black;
+.dark-mode .login-container input[type="text"],
+.dark-mode .login-container input[type="password"],
+.dark-mode .password-wrapper input {
+    background-color: #2c2c2c;
+    border: 1px solid #444;
+    color: #fff;
 }
 
-table.listeLegere th.libelle {
-    width: 70%;
-    color: black;
+.dark-mode .password-wrapper .eye-icon {
+    color: #ccc;
 }
 
-#contenu h2 {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-    color: #1D2941;
-    text-decoration: none;
-    border: 1px solid #6988BE;
-    padding-left: 25px;
-    background-color: #E9F1FE;
-    height: 28px;
+.dark-mode .btn-annuler {
+    background-color: #555;
+    color: #eee;
 }
 
-#contenu img {
-    height: 28px;
-    float: left;
+.dark-mode .btn-annuler:hover {
+    background-color: #777;
 }
 
-.message {
-    background-color: rgb(99, 184, 255);
-    color: rgb(0, 0, 205);
-    font-size: 1.1em;
-    width: 95%;
+.dark-mode .confirm-container .question {
+    color: #cccccc;
 }
 
+.dark-mode .confirm-container .btn-supprimer {
+    background-color: #e53935;
+}
 
-  
+.dark-mode .confirm-container .btn-supprimer:hover {
+    background-color: #c62828;
+}
+
+.dark-mode .forgot-link {
+    color: #90caf9;
+}
+/* 🌙 DARK MODE - fiche-container */
+.dark-mode .fiche-container {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+.dark-mode .fiche-container h2,
+.dark-mode .fiche-container h3,
+.dark-mode .fiche-container label {
+    color: #f0f0f0;
+}
+
+.dark-mode .fiche-container select {
+    background-color: #2c2c2c;
+    color: #fff;
+    border: 1px solid #444;
+}
+
+/* Boutons en mode sombre */
+.dark-mode #ok {
+    background-color: #2e7d32;
+}
+.dark-mode #ok:hover {
+    background-color: #1b5e20;
+}
+
+.dark-mode #annuler {
+    background-color: #444;
+    color: #eee;
+}
+.dark-mode #annuler:hover {
+    background-color: #666;
+}
+/* 🌞 LIGHT MODE EXPLICITE */
+body:not(.dark-mode),
+html:not(.dark-mode) {
+    background-color: #f5f7fa;
+    color: #000;
+}
+
+body:not(.dark-mode) #wrapper {
+    background-color: #f5f7fa;
+}
+
+body:not(.dark-mode) #contenu {
+    background-color: #f5f7fa;
+    color: #2c3e50;
+}
+
+body:not(.dark-mode) #menuGauche {
+    background-color: #ffffff;
+    border-right: 2px solid #dcdcdc;
+}
+
+body:not(.dark-mode) #menuList .smenu a {
+    background-color: #f4f6f8;
+    color: #004aad;
+}
+
+body:not(.dark-mode) #menuList .smenu a:hover {
+    background-color: #007acc;
+    color: white;
+}
+
+body:not(.dark-mode) #entete {
+    background-color: #3ec2ef;
+}
+
+body:not(.dark-mode) #entete h1 {
+    color: #980101;
+}
+/* ✅ Empêche le débordement horizontal */
+html, body {
+    overflow-x: hidden;
+}
+
+/* ✅ Empêche les tables trop larges de casser la page */
+.styled-table {
+    width: 100%;
+    max-width: 100%;
+    table-layout: auto;
+    overflow-x: auto;
+    display: block;
+}

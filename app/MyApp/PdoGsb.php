@@ -27,6 +27,20 @@ class PdoGsb{
 		$this->monPdo =null;
 	}
 
+    /**
+     * Retourne les informations d'un comptable
+     */
+public static function getInfosCompta($login, $mdp)
+{
+    $pdo = new self();
+    $req = "SELECT nom, prenom, login FROM compta WHERE login = :login AND mdp = :mdp";
+    $stmt = $pdo->monPdo->prepare($req);
+    $stmt->bindParam(':login', $login, PDO::PARAM_STR);
+    $stmt->bindParam(':mdp', $mdp, PDO::PARAM_STR);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 
 /**
  * Retourne les informations d'un visiteur
@@ -42,7 +56,29 @@ class PdoGsb{
 		$ligne = $rs->fetch();
 		return $ligne;
 	}
+// Recherche l'utilisateur par login
+public function getInfosVisiteurParLogin($login)
+{
+    $req = "SELECT id, nom, prenom, mdp FROM visiteur WHERE login = :login";
+    $stmt = $this->monPdo->prepare($req);
+    $stmt->bindParam(':login', $login, PDO::PARAM_STR);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC); 
+}
 
+
+public function updatePassword($login, $newPassword)
+{
+    $req = "UPDATE visiteur SET mdp = :newPassword WHERE login = :login";
+    $stmt = $this->monPdo->prepare($req);
+    $stmt->bindParam(':login', $login, PDO::PARAM_STR);
+    $stmt->bindParam(':newPassword', $newPassword, PDO::PARAM_STR);
+
+    // Retourne true ou false pour vérifier si la mise à jour a réussi
+    return $stmt->execute();
+}
+
+			
 
 
 /**
@@ -232,27 +268,26 @@ class PdoGsb{
 		return $login;
 	}
 
-	public function majVisiteur($nom,$prenom,$login,$adresse,$cp,$ville,$de){
-		$id = Str::random(3);
-		$mdp = Str::random(5);
-		$req = "INSERT INTO visiteur (id,nom,prenom,login,mdp,adresse,cp,ville,dateEmbauche)
-		VALUES (:id,:nom,:prenom,:login,:mdp,:adresse,:cp,:ville,:dateEmbauche)";
-		$res = $this->monPdo->prepare($req);
+public function modifierVisiteur($id, $nom, $prenom, $login, $mdp, $adresse, $cp, $ville, $dateEmbauche)
+{
+    $sql = "UPDATE visiteur 
+            SET nom = :nom, prenom = :prenom, login = :login, mdp = :mdp, adresse = :adresse, 
+                cp = :cp, ville = :ville, dateEmbauche = :dateEmbauche 
+            WHERE id = :id";
 
-		$res->bindParam(':id', $id, PDO::PARAM_STR);
-		$res->bindParam(':nom', $nom, PDO::PARAM_STR);
-		$res->bindParam(':prenom', $prenom, PDO::PARAM_STR);
-		$res->bindParam(':login', $login, PDO::PARAM_STR);
-		$res->bindParam(':mdp', $mdp, PDO::PARAM_STR);
-		$res->bindParam(':adresse', $adresse, PDO::PARAM_STR);
-		$res->bindParam(':cp', $cp, PDO::PARAM_STR);
-		$res->bindParam(':ville', $ville, PDO::PARAM_STR);
-		$res->bindParam(':dateEmbauche', $de, PDO::PARAM_STR);
+    $stmt = $this->monPdo->prepare($sql);
+    $stmt->bindParam(':nom', $nom);
+    $stmt->bindParam(':prenom', $prenom);
+    $stmt->bindParam(':login', $login);
+    $stmt->bindParam(':mdp', $mdp);
+    $stmt->bindParam(':adresse', $adresse);
+    $stmt->bindParam(':cp', $cp);
+    $stmt->bindParam(':ville', $ville);
+    $stmt->bindParam(':dateEmbauche', $dateEmbauche);
+    $stmt->bindParam(':id', $id);
+    return $stmt->execute();
+}
 
-		$res->execute();
-		$laLigne = $res->fetchAll(PDO::FETCH_ASSOC);
-		return $laLigne;
-	}
 
 	public function afficherLeVisiteur($id)
 	{
@@ -264,22 +299,24 @@ class PdoGsb{
 		return $laLigne;
 	}
 
-	public function updateVisiteur($nom,$prenom,$adresse,$cp,$ville,$de)
-	{
-		$req = "UPDATE visiteur v
-				set v.nom = :nom, prenom = :prenom, adresse = :adresse, cp = :cp, ville = :ville, dateEmbauche = :de WHERE id = :id";
-		$res = $this->monPdo->prepare($req);
-		$res->bindParam(':nom', $nom, PDO::PARAM_STR);
-		$res->bindParam(':prenom', $prenom, PDO::PARAM_STR);
-		$res->bindParam(':adresse', $adresse, PDO::PARAM_STR);
-		$res->bindParam(':cp', $cp, PDO::PARAM_STR);
-		$res->bindParam(':ville', $ville, PDO::PARAM_STR);
-		$res->bindParam(':de', $de, PDO::PARAM_STR);
-		$res->bindParam(':id', $id, PDO::PARAM_STR);
-		$res->execute();
-		$laLigne = $res->fetch(PDO::FETCH_ASSOC);
-		return $laLigne;
-	}
+public function updateVisiteur($id, $nom, $prenom, $adresse, $cp, $ville, $de)
+{
+    $req = "UPDATE visiteur 
+            SET nom = :nom, prenom = :prenom, adresse = :adresse, cp = :cp, ville = :ville, dateEmbauche = :de 
+            WHERE id = :id";
+
+    $res = $this->monPdo->prepare($req);
+    $res->bindParam(':nom', $nom, PDO::PARAM_STR);
+    $res->bindParam(':prenom', $prenom, PDO::PARAM_STR);
+    $res->bindParam(':adresse', $adresse, PDO::PARAM_STR);
+    $res->bindParam(':cp', $cp, PDO::PARAM_STR);
+    $res->bindParam(':ville', $ville, PDO::PARAM_STR);
+    $res->bindParam(':de', $de, PDO::PARAM_STR);
+    $res->bindParam(':id', $id, PDO::PARAM_STR);
+    $res->execute();
+
+    return $res->rowCount(); // Nombre de lignes modifiées
+}
 
 	//11 et 12
 
@@ -354,5 +391,107 @@ class PdoGsb{
 		$laLigne = $res->fetchAll(PDO::FETCH_ASSOC);
 		return $laLigne;
 	}
+// Méthodes pour AdminController
 
+public static function getLesAnnees()
+{
+    $pdo = new self();
+    $req = "SELECT DISTINCT LEFT(mois, 4) AS annee FROM fichefrais ORDER BY annee DESC";
+    $res = $pdo->monPdo->query($req);
+    return $res->fetchAll(PDO::FETCH_COLUMN);
+}
+
+public static function getInfosParAnnee($annee)
+{
+    $pdo = new self();
+    $req = "SELECT visiteur.nom, visiteur.prenom, fichefrais.mois, fichefrais.montantValide
+            FROM fichefrais
+            INNER JOIN visiteur ON fichefrais.idVisiteur = visiteur.id
+            WHERE LEFT(fichefrais.mois, 4) = :annee
+            ORDER BY fichefrais.mois DESC";
+    $stmt = $pdo->monPdo->prepare($req);
+    $stmt->bindParam(':annee', $annee, PDO::PARAM_STR);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public static function getLesVisiteurs()
+{
+    $pdo = new self();
+    $req = "SELECT id, nom, prenom FROM visiteur ORDER BY nom ASC";
+    $res = $pdo->monPdo->query($req);
+    return $res->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public static function getInfosParVisiteur($idVisiteur)
+{
+    $pdo = new self();
+    $req = "SELECT mois, montantValide
+            FROM fichefrais
+            WHERE idVisiteur = :idVisiteur
+            ORDER BY mois DESC";
+    $stmt = $pdo->monPdo->prepare($req);
+    $stmt->bindParam(':idVisiteur', $idVisiteur, PDO::PARAM_STR);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public static function getLesTypes()
+{
+    $pdo = new self();
+    $req = "SELECT id, libelle FROM fraisforfait";
+    $res = $pdo->monPdo->query($req);
+    return $res->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public static function getLesInfosParType($type)
+{
+    $pdo = new self();
+    $req = "SELECT lignefraisforfait.mois, lignefraisforfait.idVisiteur, visiteur.nom, visiteur.prenom, lignefraisforfait.quantite
+            FROM lignefraisforfait
+            INNER JOIN visiteur ON lignefraisforfait.idVisiteur = visiteur.id
+            WHERE idFraisForfait = :type
+            ORDER BY lignefraisforfait.mois DESC";
+    $stmt = $pdo->monPdo->prepare($req);
+    $stmt->bindParam(':type', $type, PDO::PARAM_STR);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	
+}
+public function ajouterVisiteur($data)
+{
+    $req = "INSERT INTO visiteur (nom, prenom, login, mdp, adresse, cp, ville, dateEmbauche)
+            VALUES (:nom, :prenom, :login, :mdp, :adresse, :cp, :ville, :dateEmbauche)";
+    $stmt = $this->monPdo->prepare($req);
+    $stmt->execute([
+        ':nom' => $data['nom'],
+        ':prenom' => $data['prenom'],
+        ':login' => $data['login'],
+        ':mdp' => $data['mdp'],
+        ':adresse' => $data['adresse'],
+        ':cp' => $data['cp'],
+        ':ville' => $data['ville'],
+        ':dateEmbauche' => $data['dateEmbauche']
+    ]);
+	
+return $stmt->execute();
+}
+
+private function genererIdVisiteur($listeIds)
+{
+    $prefixe = 'V';
+    $nombres = [];
+
+    foreach ($listeIds as $id) {
+        if (str_starts_with($id, $prefixe)) {
+            $num = intval(substr($id, strlen($prefixe)));
+            $nombres[] = $num;
+        }
+    }
+
+    $max = $nombres ? max($nombres) : 0;
+    $prochain = $max + 1;
+
+    return $prefixe . str_pad($prochain, 3, '0', STR_PAD_LEFT); // ex: V011
+}
 }

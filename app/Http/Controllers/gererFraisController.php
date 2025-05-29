@@ -66,17 +66,3 @@ class gererFraisController extends Controller{
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,7 +1,5 @@
-@extends('sommaireCompta')
 
-@section('contenu1')
-<style>
+/* ====== Conteneur de confirmation ====== */
 .confirm-container {
     max-width: 600px;
     margin: 60px auto;
@@ -32,6 +30,7 @@
     flex-wrap: wrap;
 }
 
+/* ====== Bouton Supprimer ====== */
 .btn-supprimer {
     display: inline-flex;
     align-items: center;
@@ -55,6 +54,7 @@
     transform: translateY(-2px);
 }
 
+/* ====== Bouton Annuler ====== */
 .btn-annuler {
     display: inline-flex;
     align-items: center;
@@ -76,34 +76,3 @@
     background-color: #95a5a6;
     transform: translateY(-2px);
 }
-
-.emoji {
-    font-size: 18px;
-    line-height: 1;
-    vertical-align: middle;
-}
-</style>
-
-<div class="confirm-container">
-    <h1 class="titre"><span class="emoji">⚠️</span> Supprimer un visiteur</h1>
-
-    <p class="question">
-        Es-tu sûr de vouloir supprimer <strong>{{ $visiteur['prenom'] }} {{ $visiteur['nom'] }}</strong> ?
-    </p>
-
-    <form action="{{ route('chemin_supprimerVisiteur', ['id' => $visiteur['id']]) }}" method="POST" onsubmit="return confirm('⚠️ Es-tu sûr de vouloir supprimer ce visiteur ? Cette action est irréversible.')">
-        @csrf
-        @method('DELETE')
-
-        <div class="btn-container">
-            <button type="submit" class="btn-supprimer">
-                <span class="emoji">🗑️</span> Supprimer
-            </button>
-
-            <a href="{{ route('chemin_voirVisiteur') }}" class="btn-annuler">
-                <span class="emoji">❌</span> Annuler
-            </a>
-        </div>
-    </form>
-</div>
-@endsection
